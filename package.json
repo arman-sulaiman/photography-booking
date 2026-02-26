@@ -1,0 +1,8 @@
+{
+  "name": "photography-booking-netlify-neon",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@netlify/neon": "^1.0.0"
+  }
+}

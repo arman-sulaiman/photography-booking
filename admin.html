@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bookings Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-white min-h-screen">
+  <header class="sticky top-0 z-10 bg-slate-950/80 backdrop-blur border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-2xl bg-gradient-to-br from-emerald-400 to-cyan-400"></div>
+        <div>
+          <p class="text-sm text-white/70 leading-4">Admin</p>
+          <p class="font-semibold leading-5">Bookings</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="text-sm px-4 py-2 rounded-xl border border-white/15 hover:border-white/30 hover:bg-white/5 transition">New booking</a>
+        <button id="refreshBtn" class="text-sm px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 transition">Refresh</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 py-10">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+      <div>
+        <h1 class="text-3xl font-bold">Booking Information</h1>
+        <p class="text-white/60 mt-2">Auto-refresh every 5 seconds (near real-time).</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:flex gap-3">
+        <div class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+          <p class="text-xs text-white/60">Total bookings</p>
+          <p id="countText" class="text-lg font-semibold">0</p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+          <p class="text-xs text-white/60">Last update</p>
+          <p id="lastUpdateText" class="text-lg font-semibold">—</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 bg-white/5 border border-white/10 rounded-3xl overflow-hidden shadow-xl">
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-sm">
+          <thead class="bg-white/5 text-white/80">
+            <tr>
+              <th class="text-left px-5 py-4">Created</th>
+              <th class="text-left px-5 py-4">Name</th>
+              <th class="text-left px-5 py-4">Phone</th>
+              <th class="text-left px-5 py-4">Email</th>
+              <th class="text-left px-5 py-4">Address</th>
+              <th class="text-left px-5 py-4">Package</th>
+              <th class="text-left px-5 py-4">Add-ons</th>
+              <th class="text-left px-5 py-4">Total</th>
+            </tr>
+          </thead>
+          <tbody id="rows" class="divide-y divide-white/10"></tbody>
+        </table>
+      </div>
+
+      <div id="emptyState" class="hidden p-10 text-center">
+        <p class="text-white/70">No bookings yet.</p>
+        <a href="index.html" class="inline-block mt-4 px-5 py-3 rounded-2xl bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-950 font-semibold">Create first booking</a>
+      </div>
+    </div>
+
+    <p id="errorText" class="mt-4 text-sm text-rose-300"></p>
+  </main>
+
+<script>
+const rowsEl = document.getElementById("rows");
+const countText = document.getElementById("countText");
+const lastUpdateText = document.getElementById("lastUpdateText");
+const errorText = document.getElementById("errorText");
+const emptyState = document.getElementById("emptyState");
+const refreshBtn = document.getElementById("refreshBtn");
+
+function fmtTime(iso){ try{ return new Date(iso).toLocaleString(); } catch { return iso || "—"; } }
+
+function addonSummary(b){
+  const parts = [];
+  if(b.addon_extra_edit === "yes") parts.push(`Extra edit (${b.extra_edit_qty} photos)`);
+  if(b.addon_video === "yes") parts.push("Video reel");
+  if(b.addon_express === "yes") parts.push("Express delivery");
+  if(b.addon_travel_outside === "yes") parts.push("Travel outside city");
+  return parts.length ? parts.join(", ") : "—";
+}
+
+async function load(){
+  errorText.textContent = "";
+  try{
+    const res = await fetch("/.netlify/functions/list-bookings");
+    const out = await res.json();
+    if(!res.ok) throw new Error(out?.error || "Failed to load bookings");
+
+    const bookings = out.bookings || [];
+    countText.textContent = bookings.length;
+    lastUpdateText.textContent = new Date().toLocaleTimeString();
+
+    rowsEl.innerHTML = "";
+    if(bookings.length === 0){
+      emptyState.classList.remove("hidden");
+      return;
+    }
+    emptyState.classList.add("hidden");
+
+    bookings.forEach(b => {
+      const tr = document.createElement("tr");
+      tr.className = "hover:bg-white/5 transition";
+      tr.innerHTML = `
+        <td class="px-5 py-4 text-white/70 whitespace-nowrap">${fmtTime(b.created_at)}</td>
+        <td class="px-5 py-4 font-semibold whitespace-nowrap">${b.name || ""}</td>
+        <td class="px-5 py-4 whitespace-nowrap">${b.phone || ""}</td>
+        <td class="px-5 py-4">${b.email || ""}</td>
+        <td class="px-5 py-4 max-w-[22rem]">${b.address || ""}</td>
+        <td class="px-5 py-4 max-w-[18rem]">${b.package_name || ""}</td>
+        <td class="px-5 py-4 max-w-[18rem] text-white/70">${addonSummary(b)}</td>
+        <td class="px-5 py-4 font-bold text-emerald-300 whitespace-nowrap">£${Number(b.total_price || 0).toFixed(0)}</td>
+      `;
+      rowsEl.appendChild(tr);
+    });
+  }catch(err){
+    errorText.textContent = "❌ " + (err.message || "Error");
+  }
+}
+
+refreshBtn.addEventListener("click", load);
+load();
+setInterval(load, 5000);
+</script>
+</body>
+</html>
