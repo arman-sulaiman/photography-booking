@@ -166,8 +166,12 @@
             </div>
           </div>
 
-          <p id="status" class="text-sm text-white/70"></p>
+          
         </form>
+        </form>
+
+<p id="status" class="text-center text-white/70 mt-6"></p>
+        <br>
       </section>
     </div>
   </main>
@@ -308,31 +312,36 @@ form.addEventListener("submit", async (e) => {
   payload.total_price = recalc();
 
   try{
-    const res = await fetch("/.netlify/functions/create-booking", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
+  const res = await fetch("/.netlify/functions/create-booking", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
 
-    const out = await res.json();
-    if(!res.ok) throw new Error(out?.error || "Error");
+  const out = await res.json();
+  if(!res.ok) throw new Error(out?.error || "Failed to submit booking");
 
-    // 🔥 HIDE FORM SMOOTHLY
-    form.classList.add("transition-opacity","duration-500","opacity-0");
+  // 🔥 Hide form
+  document.getElementById("bookingForm").classList.add("hidden");
 
-    setTimeout(() => {
-      form.classList.add("hidden");
-      statusEl.innerHTML = `
-        <div class="text-3xl font-bold text-emerald-400 text-center mt-10">
-          🎉 Booking Saved Successfully!
-        </div>
-      `;
-    }, 500);
+  // ✅ Show success message
+  statusEl.innerHTML = `
+    <div class="text-3xl font-bold text-emerald-400 text-center mt-8">
+      🎉 Booking Saved Successfully!
+    </div>
+  `;
 
-  }catch(err){
-    statusEl.innerHTML = `<span class="text-red-400 font-semibold">${err.message}</span>`;
-  }finally{
-    submitBtn.disabled = false;
-  }
+}catch(err){
+
+  // ❌ Show error message (form stays visible)
+  statusEl.innerHTML = `
+    <div class="text-xl font-bold text-red-400 text-center mt-6">
+      ❌ ${err.message || "Something went wrong"}
+    </div>
+  `;
+
+}finally{
+  submitBtn.disabled = false;
+}
 });
 </script>
