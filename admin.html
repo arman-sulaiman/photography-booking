@@ -119,7 +119,7 @@ async function load(){
         <td class="px-5 py-4 max-w-[22rem]">${b.address || ""}</td>
         <td class="px-5 py-4 max-w-[18rem]">${b.package_name || ""}</td>
         <td class="px-5 py-4 max-w-[18rem] text-white/70">${addonSummary(b)}</td>
-        <td class="px-5 py-4 max-w-[18rem] text-white/70">${b.notes}</td>
+        <td class="px-5 py-4 max-w-[18rem] text-white/70">${b.notes || ""}</td>
         <td class="px-5 py-4 font-bold text-emerald-300 whitespace-nowrap">£${Number(b.total_price || 0).toFixed(0)}</td>
       `;
       rowsEl.appendChild(tr);
