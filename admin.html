@@ -79,7 +79,13 @@ const errorText = document.getElementById("errorText");
 const emptyState = document.getElementById("emptyState");
 const refreshBtn = document.getElementById("refreshBtn");
 
-function fmtTime(iso){ try{ return new Date(iso).toLocaleString(); } catch { return iso || "—"; } }
+function fmtTime(iso){
+  try{
+    return new Date(iso).toLocaleDateString();
+  }catch{
+    return iso || "—";
+  }
+}
 
 function addonSummary(b){
   const parts = [];
