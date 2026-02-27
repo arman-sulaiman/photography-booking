@@ -111,12 +111,21 @@ function statusBadge(status){
 }
 
 async function updateStatus(id, status){
-  await fetch("/.netlify/functions/update-status", {
-    method: "POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({id, status})
-  });
-  load();
+  try {
+    const res = await fetch("/.netlify/functions/update-status", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, status })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) throw new Error(data.error);
+
+    load();
+  } catch (err) {
+    alert("Status update failed: " + err.message);
+  }
 }
 
 async function load(){
