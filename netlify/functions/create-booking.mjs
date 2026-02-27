@@ -15,19 +15,43 @@ export const handler = async (event) => {
 
     const sql = neon(); // uses NETLIFY_DATABASE_URL
     const [row] = await sql`
-      INSERT INTO bookings (
-        name, phone, email, address,
-        package_id, package_name, package_price,
-        addon_extra_edit, extra_edit_qty,
-        addon_video, addon_express, addon_travel_outside,
-        notes, total_price
-      ) VALUES (
-        ${data.name}, ${data.phone}, ${data.email}, ${data.address},
-        ${data.package_id}, ${data.package_name}, ${Number(data.package_price)},
-        ${data.addon_extra_edit || 'no'}, ${Number(data.extra_edit_qty || 0)},
-        ${data.addon_video || 'no'}, ${data.addon_express || 'no'}, ${data.addon_travel_outside || 'no'},
-        ${data.notes || ''}, ${Number(data.total_price)}
-      )
+      await sql`
+  INSERT INTO bookings (
+    name,
+    phone,
+    email,
+    address,
+    package_id,
+    package_name,
+    package_price,
+    addon_extra_edit,
+    extra_edit_qty,
+    addon_video,
+    addon_express,
+    addon_travel_outside,
+    notes,
+    total_price,
+    shooting_datetime,
+    status
+  )
+  VALUES (
+    ${body.name},
+    ${body.phone},
+    ${body.email},
+    ${body.address},
+    ${body.package_id},
+    ${body.package_name},
+    ${body.package_price},
+    ${body.addon_extra_edit},
+    ${body.extra_edit_qty},
+    ${body.addon_video},
+    ${body.addon_express},
+    ${body.addon_travel_outside},
+    ${body.notes},
+    ${body.total_price},
+    ${body.shooting_datetime},
+    'Pending'
+  )
       RETURNING id, created_at;
     `;
 
