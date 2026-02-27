@@ -87,7 +87,25 @@ const refreshBtn = document.getElementById("refreshBtn");
 
 function formatDate(value){
   if(!value) return "—";
-  return new Date(value).toLocaleString();
+
+  const d = new Date(value);
+
+  if (isNaN(d)) return "—";
+
+  // Format date manually (dd/mm/yyyy)
+  const day = String(d.getDate()).padStart(2, "0");
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const year = d.getFullYear();
+
+  // Keep your existing time formatting
+  const time = d.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true
+  });
+
+  return `${day}/${month}/${year}, ${time}`;
 }
 
 function addonSummary(b){
