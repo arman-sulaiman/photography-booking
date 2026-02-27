@@ -7,10 +7,7 @@ export const handler = async (event) => {
     }
     const sql = neon();
     const bookings = await sql`
-      SELECT id, created_at, name, phone, email, address,
-             package_id, package_name, package_price,
-             addon_extra_edit, extra_edit_qty, addon_video, addon_express, addon_travel_outside,
-             notes, total_price
+      SELECT *
       FROM bookings
       ORDER BY created_at DESC
       LIMIT 200;
