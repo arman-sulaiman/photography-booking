@@ -62,12 +62,11 @@
       <section class="bg-white/5 border border-white/10 rounded-3xl p-7 shadow-xl">
         <h2 class="text-xl font-semibold">Booking details</h2>
 
-        <!-- IMPORTANT: status is OUTSIDE the form wrapper so it stays visible when form hides -->
+        <!-- Status stays visible even if form is hidden -->
         <div id="statusWrap" class="mt-6">
           <div id="status" class="text-sm text-white/70"></div>
         </div>
 
-        <!-- Wrap form so we can hide it on success -->
         <div id="formWrap" class="mt-6">
           <form id="bookingForm" class="space-y-8">
             <!-- Basic -->
@@ -91,12 +90,8 @@
                 <!-- NEW FIELD -->
                 <div class="md:col-span-2">
                   <label class="block text-sm text-white/70">Shooting Date and Time</label>
-                  <input
-                    name="shooting_datetime"
-                    type="datetime-local"
-                    required
-                    class="mt-2 w-full rounded-2xl bg-slate-900/60 border border-white/10 px-4 py-3 outline-none focus:border-emerald-400/60"
-                  />
+                  <input name="shooting_datetime" type="datetime-local" required
+                    class="mt-2 w-full rounded-2xl bg-slate-900/60 border border-white/10 px-4 py-3 outline-none focus:border-emerald-400/60"/>
                   <p class="mt-2 text-xs text-white/45">Choose your preferred date/time. We will confirm availability later.</p>
                 </div>
 
@@ -134,7 +129,8 @@
                     <p class="text-xs text-white/50 mt-1">If selected, choose how many photos.</p>
                     <div id="extraEditQtyWrap" class="mt-3 hidden">
                       <label class="block text-xs text-white/60">Photo quantity</label>
-                      <input id="extra_edit_qty" type="number" min="1" value="1" class="mt-2 w-32 rounded-xl bg-slate-900/60 border border-white/10 px-3 py-2 outline-none focus:border-emerald-400/60"/>
+                      <input id="extra_edit_qty" type="number" min="1" value="1"
+                        class="mt-2 w-32 rounded-xl bg-slate-900/60 border border-white/10 px-3 py-2 outline-none focus:border-emerald-400/60"/>
                     </div>
                   </div>
                 </label>
@@ -171,7 +167,8 @@
             <!-- Notes -->
             <div>
               <h3 class="text-sm font-semibold text-white/80">Notes (optional)</h3>
-              <textarea name="notes" rows="3" placeholder="Preferred time, style, special requests..." class="mt-3 w-full rounded-2xl bg-slate-900/60 border border-white/10 px-4 py-3 outline-none focus:border-emerald-400/60"></textarea>
+              <textarea name="notes" rows="3" placeholder="Preferred time, style, special requests..."
+                class="mt-3 w-full rounded-2xl bg-slate-900/60 border border-white/10 px-4 py-3 outline-none focus:border-emerald-400/60"></textarea>
             </div>
 
             <!-- Total -->
@@ -182,7 +179,8 @@
                   <p id="totalText" class="text-3xl font-bold text-emerald-300">£0</p>
                   <p id="breakdownText" class="text-xs text-white/50 mt-2"></p>
                 </div>
-                <button id="submitBtn" type="submit" class="shrink-0 px-6 py-4 rounded-2xl font-semibold bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-950 hover:opacity-95 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                <button id="submitBtn" type="submit"
+                  class="shrink-0 px-6 py-4 rounded-2xl font-semibold bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-950 hover:opacity-95 transition disabled:opacity-50 disabled:cursor-not-allowed">
                   Submit booking
                 </button>
               </div>
@@ -198,15 +196,12 @@ const PACKAGES = [
   { id: "couple_1", title: "Couple Shoot", subtitle: "1 Hour", price: 60, badge: "Popular" },
   { id: "couple_2", title: "Couple Shoot", subtitle: "2 Hours", price: 110 },
   { id: "couple_3", title: "Couple Shoot", subtitle: "3 Hours", price: 160 },
-
   { id: "travel_1", title: "Personal Travel", subtitle: "1 Hour", price: 70 },
   { id: "travel_2", title: "Personal Travel", subtitle: "2 Hours", price: 130 },
   { id: "travel_3", title: "Personal Travel", subtitle: "3 Hours", price: 180 },
-
   { id: "event_1", title: "Mini Event Coverage", subtitle: "1 Hour", price: 60 },
   { id: "event_2", title: "Mini Event Coverage", subtitle: "2 Hours", price: 120 },
   { id: "event_3", title: "Mini Event Coverage", subtitle: "3 Hours", price: 170 },
-
   { id: "basic_personal", title: "Basic Personal Photography", subtitle: "Session", price: 60, badge: "New" },
 ];
 
@@ -264,6 +259,7 @@ function renderPackages(){
         n.classList.remove("border-emerald-400/70");
         n.classList.add("border-white/10");
       });
+
       el.dataset.selected = "1";
       el.classList.remove("border-white/10");
       el.classList.add("border-emerald-400/70");
@@ -324,7 +320,8 @@ async function safeReadJson(res){
 
 bookingForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-  statusEl.textContent = "";
+
+  statusEl.innerHTML = "";
   submitBtn.disabled = true;
 
   if(!selectedPackage){
@@ -343,7 +340,7 @@ bookingForm.addEventListener("submit", async (e) => {
   payload.addon_travel_outside = addonTravelOutside.checked ? "yes" : "no";
   payload.total_price = String(recalc());
 
-  // Safety: ensure required keys exist (prevents null "name" insert)
+  // client-side required safety
   if(!payload.name || !payload.phone || !payload.email || !payload.address || !payload.shooting_datetime){
     statusEl.innerHTML = `<div class="text-sm text-rose-300 font-semibold">Please complete all required fields.</div>`;
     submitBtn.disabled = false;
@@ -375,10 +372,9 @@ bookingForm.addEventListener("submit", async (e) => {
       </div>
     `;
 
-    // Hide the form but keep status visible
+    // Hide form only after success
     formWrap.classList.add("hidden");
 
-    // Reset state for next booking (if user clicks create another)
     const resetAll = () => {
       bookingForm.reset();
 
@@ -398,14 +394,14 @@ bookingForm.addEventListener("submit", async (e) => {
 
       recalc();
       formWrap.classList.remove("hidden");
-      statusEl.textContent = "";
+      statusEl.innerHTML = "";
     };
 
     const btn = document.getElementById("newBookingBtn");
     if(btn) btn.addEventListener("click", resetAll);
 
   }catch(err){
-    statusEl.innerHTML = `<div class="text-sm text-rose-300 font-semibold">${(err && err.message) ? err.message : "Something went wrong"}</div>`;
+    statusEl.innerHTML = `<div class="text-sm text-rose-300 font-semibold">${err?.message || "Something went wrong"}</div>`;
   }finally{
     submitBtn.disabled = false;
   }
