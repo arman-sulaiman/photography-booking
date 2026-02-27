@@ -4,9 +4,8 @@ export default async (req) => {
   try {
     const sql = neon();
 
-    // Netlify often provides req.body as a STRING
-    const data =
-      typeof req.body === "string" ? JSON.parse(req.body || "{}") : (req.body || {});
+    // ✅ Netlify gives you a Request object
+    const data = await req.json();
 
     const {
       name,
@@ -22,15 +21,7 @@ export default async (req) => {
       addon_video,
       addon_express,
       addon_travel_outside
-    } = data;
-
-    // Basic validation (prevents NULL insert)
-    if (!name || !phone || !email || !address || !package_name || !total_price || !shooting_datetime) {
-      return new Response(JSON.stringify({ error: "Missing required fields." }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" }
-      });
-    }
+    } = data || {};
 
     await sql`
       INSERT INTO bookings (
@@ -56,7 +47,6 @@ export default async (req) => {
     return new Response(JSON.stringify({ success: true }), {
       headers: { "Content-Type": "application/json" }
     });
-
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), {
       status: 500,
