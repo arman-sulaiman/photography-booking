@@ -3,21 +3,19 @@ import { neon } from "@netlify/neon";
 export default async (req) => {
   try {
     const sql = neon();
-
-    // ✅ DO NOT JSON.parse
-    const { id, status } = req.body;
+    const { id, status } = await req.json();
 
     if (!id || !status) {
       return new Response(
         JSON.stringify({ error: "Missing id or status" }),
-        { status: 400 }
+        { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
 
     await sql`
       UPDATE bookings
       SET status = ${status}
-      WHERE id = ${id}
+      WHERE id = ${Number(id)}
     `;
 
     return new Response(JSON.stringify({ success: true }), {
@@ -26,7 +24,8 @@ export default async (req) => {
 
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), {
-      status: 500
+      status: 500,
+      headers: { "Content-Type": "application/json" }
     });
   }
 };
