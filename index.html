@@ -133,7 +133,7 @@
 
               <label class="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 hover:border-white/20 transition cursor-pointer">
                 <div class="flex items-center gap-3">
-                  <input id="addon_video" type="checkbox" class="h-4 w-4 accent-emerald-400"/>
+                  <input id="addon_video" type="checkbox" class="h-4 w-4 accent-emerald-400" disabled/>
                   <p class="font-medium">Extra short video reel</p>
                 </div>
                 <p class="text-white/70">£30</p>
@@ -229,7 +229,7 @@ function renderPackages(){
   PACKAGES.forEach(pkg => {
     const el = document.createElement("button");
     el.type = "button";
-    el.className = "group text-left rounded-3xl border border-white/10 bg-white/5 p-5 hover:bg-white/7 hover:border-emerald-500/20 transition relative focus:outline-none";
+    el.className = "group text-left rounded-3xl border border-white/10 bg-white/5 p-5 hover:bg-white/7 hover:border-emerald-400/30 transition relative focus:outline-none";
     el.dataset.id = pkg.id;
 
     el.innerHTML = `
