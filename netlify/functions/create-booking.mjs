@@ -7,7 +7,8 @@ export default async (req) => {
     const data = await req.json();
 
     const {
-      package_id,   // ✅ ADD THIS
+      package_id, 
+      package_price, 
       package_name,
       total_price,
       name,
@@ -25,7 +26,8 @@ export default async (req) => {
 
     await sql`
       INSERT INTO bookings (
-        package_id,        -- ✅ ADD THIS
+        package_id,        
+        package_price,
         package_name,
         total_price,
         name,
@@ -42,8 +44,9 @@ export default async (req) => {
         status
       )
       VALUES (
-        ${package_id},     -- ✅ ADD THIS
+        ${package_id},     
         ${package_name},
+        ${package_price},
         ${total_price},
         ${name},
         ${phone},
