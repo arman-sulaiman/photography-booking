@@ -46,7 +46,7 @@
         </div>
 
         <div class="mt-6 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-sm text-emerald-100">
-          <a href="package.html">View our package details.</a>
+          <a href="/package.html">View our package details.</a>
         </div>
 
         <div class="mt-6 text-sm text-white/60 space-y-2">
@@ -62,131 +62,126 @@
       <section class="bg-white/5 border border-white/10 rounded-3xl p-7 shadow-xl">
         <h2 class="text-xl font-semibold">Booking details</h2>
 
-        <!-- Status stays visible even if form is hidden -->
-        <div id="statusWrap" class="mt-6">
-          <div id="status" class="text-sm text-white/70"></div>
-        </div>
+        <form id="bookingForm" class="mt-6 space-y-8">
+          <!-- Basic -->
+          <div>
+            <h3 class="text-sm font-semibold text-white/80">Basic information</h3>
+            <div class="mt-4 grid md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm text-white/70">Name</label>
+                <input name="name" required class="mt-2 w-full rounded-2xl bg-slate-900/60 border border-white/10 px-4 py-3 outline-none focus:border-emerald-400/60"/>
+              </div>
+              <div>
+                <label class="block text-sm text-white/70">Phone</label>
+                <input name="phone" required class="mt-2 w-full rounded-2xl bg-slate-900/60 border border-white/10 px-4 py-3 outline-none focus:border-emerald-400/60"/>
+              </div>
+              <div class="md:col-span-2">
+                <label class="block text-sm text-white/70">E-mail</label>
+                <input name="email" type="email" required class="mt-2 w-full rounded-2xl bg-slate-900/60 border border-white/10 px-4 py-3 outline-none focus:border-emerald-400/60"/>
+              </div>
 
-        <div id="formWrap" class="mt-6">
-          <form id="bookingForm" class="space-y-8">
-            <!-- Basic -->
-            <div>
-              <h3 class="text-sm font-semibold text-white/80">Basic information</h3>
-              <div class="mt-4 grid md:grid-cols-2 gap-4">
-                <div>
-                  <label class="block text-sm text-white/70">Name</label>
-                  <input name="name" required class="mt-2 w-full rounded-2xl bg-slate-900/60 border border-white/10 px-4 py-3 outline-none focus:border-emerald-400/60"/>
-                </div>
-                <div>
-                  <label class="block text-sm text-white/70">Phone</label>
-                  <input name="phone" required class="mt-2 w-full rounded-2xl bg-slate-900/60 border border-white/10 px-4 py-3 outline-none focus:border-emerald-400/60"/>
-                </div>
+              <!-- Shooting date/time -->
+              <div class="md:col-span-2">
+                <label class="block text-sm text-white/70">Shooting Date and Time</label>
+                <input
+                  name="shooting_datetime"
+                  type="datetime-local"
+                  required
+                  class="mt-2 w-full rounded-2xl bg-slate-900/60 border border-white/10 px-4 py-3 outline-none focus:border-emerald-400/60"
+                />
+                <p class="mt-2 text-xs text-white/50">Choose your preferred date/time. We will confirm availability later.</p>
+              </div>
 
-                <div class="md:col-span-2">
-                  <label class="block text-sm text-white/70">E-mail</label>
-                  <input name="email" type="email" required class="mt-2 w-full rounded-2xl bg-slate-900/60 border border-white/10 px-4 py-3 outline-none focus:border-emerald-400/60"/>
-                </div>
-
-                <!-- NEW FIELD -->
-                <div class="md:col-span-2">
-                  <label class="block text-sm text-white/70">Shooting Date and Time</label>
-                  <input name="shooting_datetime" type="datetime-local" required
-                    class="mt-2 w-full rounded-2xl bg-slate-900/60 border border-white/10 px-4 py-3 outline-none focus:border-emerald-400/60"/>
-                  <p class="mt-2 text-xs text-white/45">Choose your preferred date/time. We will confirm availability later.</p>
-                </div>
-
-                <div class="md:col-span-2">
-                  <label class="block text-sm text-white/70">Shooting address</label>
-                  <textarea name="address" required rows="3" class="mt-2 w-full rounded-2xl bg-slate-900/60 border border-white/10 px-4 py-3 outline-none focus:border-emerald-400/60"></textarea>
-                </div>
+              <div class="md:col-span-2">
+                <label class="block text-sm text-white/70">Shooting address</label>
+                <textarea name="address" required rows="3" class="mt-2 w-full rounded-2xl bg-slate-900/60 border border-white/10 px-4 py-3 outline-none focus:border-emerald-400/60"></textarea>
               </div>
             </div>
+          </div>
 
-            <!-- Packages -->
-            <div>
-              <div class="flex items-end justify-between gap-3">
-                <h3 class="text-sm font-semibold text-white/80">Choose a package</h3>
-                <p class="text-xs text-white/50">Tap a card to select</p>
-              </div>
-              <div id="packageGrid" class="mt-4 grid sm:grid-cols-2 gap-4"></div>
-
-              <input type="hidden" name="package_id" id="package_id" required />
-              <input type="hidden" name="package_name" id="package_name" required />
-              <input type="hidden" name="package_price" id="package_price" required />
+          <!-- Packages -->
+          <div>
+            <div class="flex items-end justify-between gap-3">
+              <h3 class="text-sm font-semibold text-white/80">Choose a package</h3>
+              <p class="text-xs text-white/50">Tap a card to select</p>
             </div>
+            <div id="packageGrid" class="mt-4 grid sm:grid-cols-2 gap-4"></div>
 
-            <!-- Addons -->
-            <div>
-              <h3 class="text-sm font-semibold text-white/80">Optional add-ons</h3>
-              <div class="mt-4 space-y-3">
-                <label class="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 hover:border-white/20 transition cursor-pointer">
-                  <input id="addon_extra_edit" type="checkbox" class="mt-1 h-4 w-4 accent-emerald-400"/>
-                  <div class="flex-1">
-                    <div class="flex items-center justify-between gap-4">
-                      <p class="font-medium">Extra professional edit</p>
-                      <p class="text-white/70">£4 / photo</p>
-                    </div>
-                    <p class="text-xs text-white/50 mt-1">If selected, choose how many photos.</p>
-                    <div id="extraEditQtyWrap" class="mt-3 hidden">
-                      <label class="block text-xs text-white/60">Photo quantity</label>
-                      <input id="extra_edit_qty" type="number" min="1" value="1"
-                        class="mt-2 w-32 rounded-xl bg-slate-900/60 border border-white/10 px-3 py-2 outline-none focus:border-emerald-400/60"/>
-                    </div>
+            <input type="hidden" name="package_id" id="package_id" required />
+            <input type="hidden" name="package_name" id="package_name" required />
+            <input type="hidden" name="package_price" id="package_price" required />
+          </div>
+
+          <!-- Addons -->
+          <div>
+            <h3 class="text-sm font-semibold text-white/80">Optional add-ons</h3>
+            <div class="mt-4 space-y-3">
+              <label class="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 hover:border-white/20 transition cursor-pointer">
+                <input id="addon_extra_edit" type="checkbox" class="mt-1 h-4 w-4 accent-emerald-400"/>
+                <div class="flex-1">
+                  <div class="flex items-center justify-between gap-4">
+                    <p class="font-medium">Extra professional edit</p>
+                    <p class="text-white/70">£4 / photo</p>
                   </div>
-                </label>
-
-                <label class="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 hover:border-white/20 transition cursor-pointer">
-                  <div class="flex items-center gap-3">
-                    <input id="addon_video" type="checkbox" class="h-4 w-4 accent-emerald-400"/>
-                    <p class="font-medium">Extra short video reel</p>
+                  <p class="text-xs text-white/50 mt-1">If selected, choose how many photos.</p>
+                  <div id="extraEditQtyWrap" class="mt-3 hidden">
+                    <label class="block text-xs text-white/60">Photo quantity</label>
+                    <input id="extra_edit_qty" type="number" min="1" value="1" class="mt-2 w-32 rounded-xl bg-slate-900/60 border border-white/10 px-3 py-2 outline-none focus:border-emerald-400/60"/>
                   </div>
-                  <p class="text-white/70">£30</p>
-                </label>
-
-                <label class="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 hover:border-white/20 transition cursor-pointer">
-                  <div class="flex items-center gap-3">
-                    <input id="addon_express" type="checkbox" class="h-4 w-4 accent-emerald-400"/>
-                    <p class="font-medium">Same-day / 24-hour delivery</p>
-                  </div>
-                  <p class="text-white/70">£30</p>
-                </label>
-
-                <label class="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 hover:border-white/20 transition cursor-pointer">
-                  <div class="flex items-center gap-3">
-                    <input id="addon_travel_outside" type="checkbox" class="h-4 w-4 accent-emerald-400"/>
-                    <div>
-                      <p class="font-medium">Travel outside city</p>
-                      <p class="text-xs text-white/50">Will be discussed later</p>
-                    </div>
-                  </div>
-                  <p class="text-white/50">—</p>
-                </label>
-              </div>
-            </div>
-
-            <!-- Notes -->
-            <div>
-              <h3 class="text-sm font-semibold text-white/80">Notes (optional)</h3>
-              <textarea name="notes" rows="3" placeholder="Preferred time, style, special requests..."
-                class="mt-3 w-full rounded-2xl bg-slate-900/60 border border-white/10 px-4 py-3 outline-none focus:border-emerald-400/60"></textarea>
-            </div>
-
-            <!-- Total -->
-            <div class="rounded-3xl border border-white/10 bg-slate-900/40 p-5">
-              <div class="flex items-start justify-between gap-6">
-                <div>
-                  <p class="text-sm text-white/60">Total</p>
-                  <p id="totalText" class="text-3xl font-bold text-emerald-300">£0</p>
-                  <p id="breakdownText" class="text-xs text-white/50 mt-2"></p>
                 </div>
-                <button id="submitBtn" type="submit"
-                  class="shrink-0 px-6 py-4 rounded-2xl font-semibold bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-950 hover:opacity-95 transition disabled:opacity-50 disabled:cursor-not-allowed">
-                  Submit booking
-                </button>
-              </div>
+              </label>
+
+              <label class="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 hover:border-white/20 transition cursor-pointer">
+                <div class="flex items-center gap-3">
+                  <input id="addon_video" type="checkbox" class="h-4 w-4 accent-emerald-400"/>
+                  <p class="font-medium">Extra short video reel</p>
+                </div>
+                <p class="text-white/70">£30</p>
+              </label>
+
+              <label class="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 hover:border-white/20 transition cursor-pointer">
+                <div class="flex items-center gap-3">
+                  <input id="addon_express" type="checkbox" class="h-4 w-4 accent-emerald-400"/>
+                  <p class="font-medium">Same-day / 24-hour delivery</p>
+                </div>
+                <p class="text-white/70">£30</p>
+              </label>
+
+              <label class="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 hover:border-white/20 transition cursor-pointer">
+                <div class="flex items-center gap-3">
+                  <input id="addon_travel_outside" type="checkbox" class="h-4 w-4 accent-emerald-400"/>
+                  <div>
+                    <p class="font-medium">Travel outside city</p>
+                    <p class="text-xs text-white/50">Will be discussed later</p>
+                  </div>
+                </div>
+                <p class="text-white/50">—</p>
+              </label>
             </div>
-          </form>
-        </div><!-- /formWrap -->
+          </div>
+
+          <!-- Notes -->
+          <div>
+            <h3 class="text-sm font-semibold text-white/80">Notes (optional)</h3>
+            <textarea name="notes" rows="3" placeholder="Preferred time, style, special requests..." class="mt-3 w-full rounded-2xl bg-slate-900/60 border border-white/10 px-4 py-3 outline-none focus:border-emerald-400/60"></textarea>
+          </div>
+
+          <!-- Total -->
+          <div class="rounded-3xl border border-white/10 bg-slate-900/40 p-5">
+            <div class="flex items-start justify-between gap-6">
+              <div>
+                <p class="text-sm text-white/60">Total</p>
+                <p id="totalText" class="text-3xl font-bold text-emerald-300">£0</p>
+                <p id="breakdownText" class="text-xs text-white/50 mt-2"></p>
+              </div>
+              <button id="submitBtn" type="submit" class="shrink-0 px-6 py-4 rounded-2xl font-semibold bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-950 hover:opacity-95 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                Submit booking
+              </button>
+            </div>
+          </div>
+
+          <p id="status" class="text-sm text-white/70"></p>
+        </form>
       </section>
     </div>
   </main>
@@ -196,12 +191,15 @@ const PACKAGES = [
   { id: "couple_1", title: "Couple Shoot", subtitle: "1 Hour", price: 60, badge: "Popular" },
   { id: "couple_2", title: "Couple Shoot", subtitle: "2 Hours", price: 110 },
   { id: "couple_3", title: "Couple Shoot", subtitle: "3 Hours", price: 160 },
+
   { id: "travel_1", title: "Personal Travel", subtitle: "1 Hour", price: 70 },
   { id: "travel_2", title: "Personal Travel", subtitle: "2 Hours", price: 130 },
   { id: "travel_3", title: "Personal Travel", subtitle: "3 Hours", price: 180 },
+
   { id: "event_1", title: "Mini Event Coverage", subtitle: "1 Hour", price: 60 },
   { id: "event_2", title: "Mini Event Coverage", subtitle: "2 Hours", price: 120 },
   { id: "event_3", title: "Mini Event Coverage", subtitle: "3 Hours", price: 170 },
+
   { id: "basic_personal", title: "Basic Personal Photography", subtitle: "Session", price: 60, badge: "New" },
 ];
 
@@ -223,8 +221,6 @@ const totalText = document.getElementById("totalText");
 const breakdownText = document.getElementById("breakdownText");
 const statusEl = document.getElementById("status");
 const submitBtn = document.getElementById("submitBtn");
-const formWrap = document.getElementById("formWrap");
-const bookingForm = document.getElementById("bookingForm");
 
 function gbp(n){ return "£" + Number(n).toFixed(0); }
 
@@ -311,28 +307,35 @@ recalc();
 
 async function safeReadJson(res){
   const text = await res.text();
-  try{
-    return { ok: res.ok, data: JSON.parse(text), raw: text };
-  }catch{
-    return { ok: res.ok, data: null, raw: text };
-  }
+  try { return JSON.parse(text); }
+  catch { return { __raw_text: text }; }
 }
 
-bookingForm.addEventListener("submit", async (e) => {
+document.getElementById("bookingForm").addEventListener("submit", async (e) => {
   e.preventDefault();
+  const form = e.target;
 
-  statusEl.innerHTML = "";
+  statusEl.textContent = "";
   submitBtn.disabled = true;
 
-  if(!selectedPackage){
-    statusEl.innerHTML = `<div class="text-sm text-rose-300 font-semibold">Please select a package.</div>`;
+  // Let browser validate required fields first
+  if(!form.checkValidity()){
+    form.reportValidity();
+    statusEl.innerHTML = `<div class="text-sm font-semibold text-rose-300 mt-2">Please fill all required fields.</div>`;
     submitBtn.disabled = false;
     return;
   }
 
-  const fd = new FormData(bookingForm);
+  if(!selectedPackage){
+    statusEl.innerHTML = `<div class="text-sm font-semibold text-rose-300 mt-2">Please select a package.</div>`;
+    submitBtn.disabled = false;
+    return;
+  }
+
+  const fd = new FormData(form);
   const payload = Object.fromEntries(fd.entries());
 
+  // Add-ons + total
   payload.addon_extra_edit = addonExtraEdit.checked ? "yes" : "no";
   payload.extra_edit_qty = addonExtraEdit.checked ? String(Math.max(1, Number(extraEditQtyInput.value || 1))) : "0";
   payload.addon_video = addonVideo.checked ? "yes" : "no";
@@ -340,9 +343,15 @@ bookingForm.addEventListener("submit", async (e) => {
   payload.addon_travel_outside = addonTravelOutside.checked ? "yes" : "no";
   payload.total_price = String(recalc());
 
-  // client-side required safety
-  if(!payload.name || !payload.phone || !payload.email || !payload.address || !payload.shooting_datetime){
-    statusEl.innerHTML = `<div class="text-sm text-rose-300 font-semibold">Please complete all required fields.</div>`;
+  // Extra safety: show EXACT missing fields (helps debugging)
+  const requiredKeys = ["name","phone","email","address","shooting_datetime","package_name","package_price"];
+  const missing = requiredKeys.filter(k => !String(payload[k] || "").trim());
+  if(missing.length){
+    statusEl.innerHTML = `
+      <div class="text-sm font-semibold text-rose-300 mt-2">
+        Missing required fields: <span class="text-white/80">${missing.join(", ")}</span>
+      </div>
+    `;
     submitBtn.disabled = false;
     return;
   }
@@ -355,58 +364,442 @@ bookingForm.addEventListener("submit", async (e) => {
     });
 
     const out = await safeReadJson(res);
-
-    if(!out.ok){
-      const msg = out.data?.error || out.raw || "Failed to submit booking";
+    if(!res.ok){
+      const msg = out?.error || out?.message || (out?.__raw_text ? "Server returned non-JSON error" : "Failed to submit booking");
       throw new Error(msg);
     }
 
     statusEl.innerHTML = `
-      <div class="rounded-3xl border border-emerald-400/30 bg-emerald-500/10 p-5">
-        <div class="text-2xl font-bold text-emerald-300">Booking saved successfully</div>
-        <div class="mt-2 text-sm text-white/70">We received your booking request. We will contact you soon.</div>
-        <div class="mt-4 flex flex-wrap gap-3">
-          <a href="admin.html" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 transition text-sm">View admin</a>
-          <button id="newBookingBtn" class="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-950 font-semibold text-sm hover:opacity-95 transition">Create another booking</button>
-        </div>
+      <div class="text-2xl font-bold text-emerald-400 mt-2">
+        Booking Saved Successfully!
       </div>
     `;
 
-    // Hide form only after success
-    formWrap.classList.add("hidden");
+    // Reset UI
+    form.reset();
+    selectedPackage = null;
+    document.querySelectorAll("[data-selected='1']").forEach(n => {
+      n.dataset.selected = "0";
+      n.classList.remove("border-emerald-400/70");
+      n.classList.add("border-white/10");
+    });
 
-    const resetAll = () => {
-      bookingForm.reset();
+    extraEditQtyWrap.classList.add("hidden");
+    extraEditQtyInput.value = "1";
+    addonExtraEdit.checked = false;
+    addonVideo.checked = false;
+    addonExpress.checked = false;
+    addonTravelOutside.checked = false;
 
-      selectedPackage = null;
+    recalc();
+  }catch(err){
+    statusEl.innerHTML = `<div class="text-sm font-semibold text-rose-300 mt-2">${err.message || "Something went wrong"}</div>`;
+  }finally{
+    submitBtn.disabled = false;
+  }
+});
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Photography Booking</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-950 text-white min-h-screen">
+  <header class="sticky top-0 z-10 bg-slate-950/80 backdrop-blur border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-2xl bg-gradient-to-br from-emerald-400 to-cyan-400"></div>
+        <div>
+          <p class="text-sm text-white/70 leading-4">MASRUF IFTY</p>
+          <p class="font-semibold leading-5">Photography</p>
+        </div>
+      </div>
+      <a href="https://www.instagram.com/__masruf__/" class="text-sm px-4 py-2 rounded-xl border border-white/15 hover:border-white/30 hover:bg-white/5 transition">
+        Instagram
+      </a>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 py-10">
+    <div class="grid lg:grid-cols-2 gap-8 items-start">
+      <!-- Left -->
+      <section class="bg-white/5 border border-white/10 rounded-3xl p-7 shadow-xl">
+        <h1 class="text-3xl md:text-4xl font-bold tracking-tight">Book your session</h1>
+        <p class="mt-3 text-white/70">Select a package, add extras, and submit. Total updates instantly.</p>
+
+        <div class="mt-6 grid sm:grid-cols-3 gap-3 text-sm">
+          <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+            <p class="text-white/60">Packages from</p>
+            <p class="mt-1 font-semibold">£60</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+            <p class="text-white/60">Delivery</p>
+            <p class="mt-1 font-semibold">2–7 days</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+            <p class="text-white/60">Add-ons</p>
+            <p class="mt-1 font-semibold">Custom</p>
+          </div>
+        </div>
+
+        <div class="mt-6 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-sm text-emerald-100">
+          <a href="/package.html">View our package details.</a>
+        </div>
+
+        <div class="mt-6 text-sm text-white/60 space-y-2">
+          <p class="font-semibold text-white/80">Notes:</p>
+          <ul class="list-disc list-inside space-y-1">
+            <li>Extra professional edit is <span class="font-semibold">£4 per photo</span> (quantity required).</li>
+            <li>Travel outside city will be discussed later (no automatic cost).</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Right -->
+      <section class="bg-white/5 border border-white/10 rounded-3xl p-7 shadow-xl">
+        <h2 class="text-xl font-semibold">Booking details</h2>
+
+        <form id="bookingForm" class="mt-6 space-y-8">
+          <!-- Basic -->
+          <div>
+            <h3 class="text-sm font-semibold text-white/80">Basic information</h3>
+            <div class="mt-4 grid md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm text-white/70">Name</label>
+                <input name="name" required class="mt-2 w-full rounded-2xl bg-slate-900/60 border border-white/10 px-4 py-3 outline-none focus:border-emerald-400/60"/>
+              </div>
+              <div>
+                <label class="block text-sm text-white/70">Phone</label>
+                <input name="phone" required class="mt-2 w-full rounded-2xl bg-slate-900/60 border border-white/10 px-4 py-3 outline-none focus:border-emerald-400/60"/>
+              </div>
+              <div class="md:col-span-2">
+                <label class="block text-sm text-white/70">E-mail</label>
+                <input name="email" type="email" required class="mt-2 w-full rounded-2xl bg-slate-900/60 border border-white/10 px-4 py-3 outline-none focus:border-emerald-400/60"/>
+              </div>
+
+              <!-- Shooting date/time -->
+              <div class="md:col-span-2">
+                <label class="block text-sm text-white/70">Shooting Date and Time</label>
+                <input
+                  name="shooting_datetime"
+                  type="datetime-local"
+                  required
+                  class="mt-2 w-full rounded-2xl bg-slate-900/60 border border-white/10 px-4 py-3 outline-none focus:border-emerald-400/60"
+                />
+                <p class="mt-2 text-xs text-white/50">Choose your preferred date/time. We will confirm availability later.</p>
+              </div>
+
+              <div class="md:col-span-2">
+                <label class="block text-sm text-white/70">Shooting address</label>
+                <textarea name="address" required rows="3" class="mt-2 w-full rounded-2xl bg-slate-900/60 border border-white/10 px-4 py-3 outline-none focus:border-emerald-400/60"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Packages -->
+          <div>
+            <div class="flex items-end justify-between gap-3">
+              <h3 class="text-sm font-semibold text-white/80">Choose a package</h3>
+              <p class="text-xs text-white/50">Tap a card to select</p>
+            </div>
+            <div id="packageGrid" class="mt-4 grid sm:grid-cols-2 gap-4"></div>
+
+            <input type="hidden" name="package_id" id="package_id" required />
+            <input type="hidden" name="package_name" id="package_name" required />
+            <input type="hidden" name="package_price" id="package_price" required />
+          </div>
+
+          <!-- Addons -->
+          <div>
+            <h3 class="text-sm font-semibold text-white/80">Optional add-ons</h3>
+            <div class="mt-4 space-y-3">
+              <label class="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 hover:border-white/20 transition cursor-pointer">
+                <input id="addon_extra_edit" type="checkbox" class="mt-1 h-4 w-4 accent-emerald-400"/>
+                <div class="flex-1">
+                  <div class="flex items-center justify-between gap-4">
+                    <p class="font-medium">Extra professional edit</p>
+                    <p class="text-white/70">£4 / photo</p>
+                  </div>
+                  <p class="text-xs text-white/50 mt-1">If selected, choose how many photos.</p>
+                  <div id="extraEditQtyWrap" class="mt-3 hidden">
+                    <label class="block text-xs text-white/60">Photo quantity</label>
+                    <input id="extra_edit_qty" type="number" min="1" value="1" class="mt-2 w-32 rounded-xl bg-slate-900/60 border border-white/10 px-3 py-2 outline-none focus:border-emerald-400/60"/>
+                  </div>
+                </div>
+              </label>
+
+              <label class="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 hover:border-white/20 transition cursor-pointer">
+                <div class="flex items-center gap-3">
+                  <input id="addon_video" type="checkbox" class="h-4 w-4 accent-emerald-400"/>
+                  <p class="font-medium">Extra short video reel</p>
+                </div>
+                <p class="text-white/70">£30</p>
+              </label>
+
+              <label class="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 hover:border-white/20 transition cursor-pointer">
+                <div class="flex items-center gap-3">
+                  <input id="addon_express" type="checkbox" class="h-4 w-4 accent-emerald-400"/>
+                  <p class="font-medium">Same-day / 24-hour delivery</p>
+                </div>
+                <p class="text-white/70">£30</p>
+              </label>
+
+              <label class="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 hover:border-white/20 transition cursor-pointer">
+                <div class="flex items-center gap-3">
+                  <input id="addon_travel_outside" type="checkbox" class="h-4 w-4 accent-emerald-400"/>
+                  <div>
+                    <p class="font-medium">Travel outside city</p>
+                    <p class="text-xs text-white/50">Will be discussed later</p>
+                  </div>
+                </div>
+                <p class="text-white/50">—</p>
+              </label>
+            </div>
+          </div>
+
+          <!-- Notes -->
+          <div>
+            <h3 class="text-sm font-semibold text-white/80">Notes (optional)</h3>
+            <textarea name="notes" rows="3" placeholder="Preferred time, style, special requests..." class="mt-3 w-full rounded-2xl bg-slate-900/60 border border-white/10 px-4 py-3 outline-none focus:border-emerald-400/60"></textarea>
+          </div>
+
+          <!-- Total -->
+          <div class="rounded-3xl border border-white/10 bg-slate-900/40 p-5">
+            <div class="flex items-start justify-between gap-6">
+              <div>
+                <p class="text-sm text-white/60">Total</p>
+                <p id="totalText" class="text-3xl font-bold text-emerald-300">£0</p>
+                <p id="breakdownText" class="text-xs text-white/50 mt-2"></p>
+              </div>
+              <button id="submitBtn" type="submit" class="shrink-0 px-6 py-4 rounded-2xl font-semibold bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-950 hover:opacity-95 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                Submit booking
+              </button>
+            </div>
+          </div>
+
+          <p id="status" class="text-sm text-white/70"></p>
+        </form>
+      </section>
+    </div>
+  </main>
+
+<script>
+const PACKAGES = [
+  { id: "couple_1", title: "Couple Shoot", subtitle: "1 Hour", price: 60, badge: "Popular" },
+  { id: "couple_2", title: "Couple Shoot", subtitle: "2 Hours", price: 110 },
+  { id: "couple_3", title: "Couple Shoot", subtitle: "3 Hours", price: 160 },
+
+  { id: "travel_1", title: "Personal Travel", subtitle: "1 Hour", price: 70 },
+  { id: "travel_2", title: "Personal Travel", subtitle: "2 Hours", price: 130 },
+  { id: "travel_3", title: "Personal Travel", subtitle: "3 Hours", price: 180 },
+
+  { id: "event_1", title: "Mini Event Coverage", subtitle: "1 Hour", price: 60 },
+  { id: "event_2", title: "Mini Event Coverage", subtitle: "2 Hours", price: 120 },
+  { id: "event_3", title: "Mini Event Coverage", subtitle: "3 Hours", price: 170 },
+
+  { id: "basic_personal", title: "Basic Personal Photography", subtitle: "Session", price: 60, badge: "New" },
+];
+
+let selectedPackage = null;
+
+const packageGrid = document.getElementById("packageGrid");
+const packageIdInput = document.getElementById("package_id");
+const packageNameInput = document.getElementById("package_name");
+const packagePriceInput = document.getElementById("package_price");
+
+const addonExtraEdit = document.getElementById("addon_extra_edit");
+const extraEditQtyWrap = document.getElementById("extraEditQtyWrap");
+const extraEditQtyInput = document.getElementById("extra_edit_qty");
+const addonVideo = document.getElementById("addon_video");
+const addonExpress = document.getElementById("addon_express");
+const addonTravelOutside = document.getElementById("addon_travel_outside");
+
+const totalText = document.getElementById("totalText");
+const breakdownText = document.getElementById("breakdownText");
+const statusEl = document.getElementById("status");
+const submitBtn = document.getElementById("submitBtn");
+
+function gbp(n){ return "£" + Number(n).toFixed(0); }
+
+function renderPackages(){
+  packageGrid.innerHTML = "";
+  PACKAGES.forEach(pkg => {
+    const el = document.createElement("button");
+    el.type = "button";
+    el.className = "group text-left rounded-3xl border border-white/10 bg-white/5 p-5 hover:bg-white/7 hover:border-white/20 transition relative focus:outline-none";
+    el.dataset.id = pkg.id;
+
+    el.innerHTML = `
+      ${pkg.badge ? `<span class="absolute top-4 right-4 text-xs px-2 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-200">${pkg.badge}</span>` : ""}
+      <p class="text-sm text-white/60">${pkg.subtitle}</p>
+      <h4 class="mt-1 text-xl font-semibold">${pkg.title}</h4>
+      <div class="mt-4 flex items-end justify-between">
+        <p class="text-3xl font-bold text-emerald-300">${gbp(pkg.price)}</p>
+        <span class="text-xs text-white/50 group-hover:text-white/70">Select →</span>
+      </div>
+      <div class="mt-4 h-px bg-white/10"></div>
+      <p class="mt-3 text-xs text-white/55">Instant price update</p>
+    `;
+
+    el.addEventListener("click", () => {
+      selectedPackage = pkg;
+      packageIdInput.value = pkg.id;
+      packageNameInput.value = `${pkg.title} — ${pkg.subtitle}`;
+      packagePriceInput.value = String(pkg.price);
+
       document.querySelectorAll("[data-selected='1']").forEach(n => {
         n.dataset.selected = "0";
         n.classList.remove("border-emerald-400/70");
         n.classList.add("border-white/10");
       });
 
-      extraEditQtyWrap.classList.add("hidden");
-      extraEditQtyInput.value = "1";
-      addonExtraEdit.checked = false;
-      addonVideo.checked = false;
-      addonExpress.checked = false;
-      addonTravelOutside.checked = false;
+      el.dataset.selected = "1";
+      el.classList.remove("border-white/10");
+      el.classList.add("border-emerald-400/70");
 
       recalc();
-      formWrap.classList.remove("hidden");
-      statusEl.innerHTML = "";
-    };
+    });
 
-    const btn = document.getElementById("newBookingBtn");
-    if(btn) btn.addEventListener("click", resetAll);
+    packageGrid.appendChild(el);
+  });
+}
 
+function addonExtraEditCost(){
+  if(!addonExtraEdit.checked) return 0;
+  const qty = Math.max(1, Number(extraEditQtyInput.value || 1));
+  return qty * 4;
+}
+
+function recalc(){
+  const pkgCost = selectedPackage ? selectedPackage.price : 0;
+  const videoCost = addonVideo.checked ? 30 : 0;
+  const expressCost = addonExpress.checked ? 30 : 0;
+  const extraEditCost = addonExtraEditCost();
+  const total = pkgCost + videoCost + expressCost + extraEditCost;
+
+  totalText.textContent = gbp(total);
+
+  const parts = [];
+  if(selectedPackage) parts.push(`Package ${gbp(pkgCost)}`);
+  if(extraEditCost) parts.push(`Extra edit ${gbp(extraEditCost)} (${Math.max(1, Number(extraEditQtyInput.value || 1))} × £4)`);
+  if(videoCost) parts.push(`Video reel ${gbp(videoCost)}`);
+  if(expressCost) parts.push(`Express delivery ${gbp(expressCost)}`);
+  if(addonTravelOutside.checked) parts.push(`Travel outside city (discuss later)`);
+
+  breakdownText.textContent = parts.length ? parts.join(" • ") : "Select a package to see your total.";
+  return total;
+}
+
+addonExtraEdit.addEventListener("change", () => {
+  extraEditQtyWrap.classList.toggle("hidden", !addonExtraEdit.checked);
+  recalc();
+});
+extraEditQtyInput.addEventListener("input", recalc);
+addonVideo.addEventListener("change", recalc);
+addonExpress.addEventListener("change", recalc);
+addonTravelOutside.addEventListener("change", recalc);
+
+renderPackages();
+recalc();
+
+async function safeReadJson(res){
+  const text = await res.text();
+  try { return JSON.parse(text); }
+  catch { return { __raw_text: text }; }
+}
+
+document.getElementById("bookingForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const form = e.target;
+
+  statusEl.textContent = "";
+  submitBtn.disabled = true;
+
+  // Let browser validate required fields first
+  if(!form.checkValidity()){
+    form.reportValidity();
+    statusEl.innerHTML = `<div class="text-sm font-semibold text-rose-300 mt-2">Please fill all required fields.</div>`;
+    submitBtn.disabled = false;
+    return;
+  }
+
+  if(!selectedPackage){
+    statusEl.innerHTML = `<div class="text-sm font-semibold text-rose-300 mt-2">Please select a package.</div>`;
+    submitBtn.disabled = false;
+    return;
+  }
+
+  const fd = new FormData(form);
+  const payload = Object.fromEntries(fd.entries());
+
+  // Add-ons + total
+  payload.addon_extra_edit = addonExtraEdit.checked ? "yes" : "no";
+  payload.extra_edit_qty = addonExtraEdit.checked ? String(Math.max(1, Number(extraEditQtyInput.value || 1))) : "0";
+  payload.addon_video = addonVideo.checked ? "yes" : "no";
+  payload.addon_express = addonExpress.checked ? "yes" : "no";
+  payload.addon_travel_outside = addonTravelOutside.checked ? "yes" : "no";
+  payload.total_price = String(recalc());
+
+  // Extra safety: show EXACT missing fields (helps debugging)
+  const requiredKeys = ["name","phone","email","address","shooting_datetime","package_name","package_price"];
+  const missing = requiredKeys.filter(k => !String(payload[k] || "").trim());
+  if(missing.length){
+    statusEl.innerHTML = `
+      <div class="text-sm font-semibold text-rose-300 mt-2">
+        Missing required fields: <span class="text-white/80">${missing.join(", ")}</span>
+      </div>
+    `;
+    submitBtn.disabled = false;
+    return;
+  }
+
+  try{
+    const res = await fetch("/.netlify/functions/create-booking", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const out = await safeReadJson(res);
+    if(!res.ok){
+      const msg = out?.error || out?.message || (out?.__raw_text ? "Server returned non-JSON error" : "Failed to submit booking");
+      throw new Error(msg);
+    }
+
+    statusEl.innerHTML = `
+      <div class="text-2xl font-bold text-emerald-400 mt-2">
+        Booking Saved Successfully!
+      </div>
+    `;
+
+    // Reset UI
+    form.reset();
+    selectedPackage = null;
+    document.querySelectorAll("[data-selected='1']").forEach(n => {
+      n.dataset.selected = "0";
+      n.classList.remove("border-emerald-400/70");
+      n.classList.add("border-white/10");
+    });
+
+    extraEditQtyWrap.classList.add("hidden");
+    extraEditQtyInput.value = "1";
+    addonExtraEdit.checked = false;
+    addonVideo.checked = false;
+    addonExpress.checked = false;
+    addonTravelOutside.checked = false;
+
+    recalc();
   }catch(err){
-    statusEl.innerHTML = `<div class="text-sm text-rose-300 font-semibold">${err?.message || "Something went wrong"}</div>`;
+    statusEl.innerHTML = `<div class="text-sm font-semibold text-rose-300 mt-2">${err.message || "Something went wrong"}</div>`;
   }finally{
     submitBtn.disabled = false;
   }
 });
 </script>
-
 </body>
 </html>
