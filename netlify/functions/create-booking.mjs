@@ -44,9 +44,9 @@ export default async (req) => {
         status
       )
       VALUES (
-        ${package_id},     
-        ${package_name},
+        ${package_id},    
         ${package_price},
+        ${package_name},
         ${total_price},
         ${name},
         ${phone},
