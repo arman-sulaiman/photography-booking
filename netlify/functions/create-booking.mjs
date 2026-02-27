@@ -3,43 +3,43 @@ import { neon } from "@netlify/neon";
 export default async (req) => {
   try {
     const sql = neon();
-    const body = JSON.parse(req.body);
+
+    // ✅ DO NOT JSON.parse
+    const data = req.body;
+
+    const {
+      name,
+      phone,
+      email,
+      address,
+      package_name,
+      total_price,
+      notes,
+      shooting_datetime,
+      addon_extra_edit,
+      extra_edit_qty,
+      addon_video,
+      addon_express,
+      addon_travel_outside
+    } = data;
 
     await sql`
       INSERT INTO bookings (
-        name,
-        phone,
-        email,
-        address,
-        package_id,
-        package_name,
-        package_price,
-        addon_extra_edit,
-        extra_edit_qty,
-        addon_video,
-        addon_express,
-        addon_travel_outside,
-        notes,
-        total_price,
+        name, phone, email, address,
+        package_name, total_price, notes,
         shooting_datetime,
+        addon_extra_edit, extra_edit_qty,
+        addon_video, addon_express,
+        addon_travel_outside,
         status
       )
       VALUES (
-        ${body.name},
-        ${body.phone},
-        ${body.email},
-        ${body.address},
-        ${body.package_id},
-        ${body.package_name},
-        ${body.package_price},
-        ${body.addon_extra_edit},
-        ${body.extra_edit_qty},
-        ${body.addon_video},
-        ${body.addon_express},
-        ${body.addon_travel_outside},
-        ${body.notes},
-        ${body.total_price},
-        ${body.shooting_datetime},
+        ${name}, ${phone}, ${email}, ${address},
+        ${package_name}, ${total_price}, ${notes},
+        ${shooting_datetime},
+        ${addon_extra_edit}, ${extra_edit_qty},
+        ${addon_video}, ${addon_express},
+        ${addon_travel_outside},
         'Pending'
       )
     `;
@@ -50,8 +50,7 @@ export default async (req) => {
 
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" }
+      status: 500
     });
   }
 };
