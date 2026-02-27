@@ -1,9 +1,11 @@
-import { neon } from '@netlify/neon';
+import { neon } from "@netlify/neon";
 
 export default async (req) => {
   try {
     const sql = neon();
-    const { id, status } = JSON.parse(req.body);
+
+    // ✅ DO NOT JSON.parse
+    const { id, status } = req.body;
 
     if (!id || !status) {
       return new Response(
@@ -18,15 +20,13 @@ export default async (req) => {
       WHERE id = ${id}
     `;
 
-    return new Response(
-      JSON.stringify({ success: true }),
-      { headers: { "Content-Type": "application/json" } }
-    );
+    return new Response(JSON.stringify({ success: true }), {
+      headers: { "Content-Type": "application/json" }
+    });
 
   } catch (err) {
-    return new Response(
-      JSON.stringify({ error: err.message }),
-      { status: 500 }
-    );
+    return new Response(JSON.stringify({ error: err.message }), {
+      status: 500
+    });
   }
 };
