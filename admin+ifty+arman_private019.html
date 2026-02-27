@@ -110,7 +110,7 @@ function statusBadge(status){
   </span>`;
 }
 
-async function updateStatus(id, status){
+async function updateStatus(id, status) {
   try {
     const res = await fetch("/.netlify/functions/update-status", {
       method: "POST",
@@ -118,11 +118,13 @@ async function updateStatus(id, status){
       body: JSON.stringify({ id, status })
     });
 
-    const data = await res.json();
+    const out = await res.json();
 
-    if (!res.ok) throw new Error(data.error);
+    if (!res.ok) {
+      throw new Error(out.error || "Update failed");
+    }
 
-    load();
+    load(); // reload bookings
   } catch (err) {
     alert("Status update failed: " + err.message);
   }
