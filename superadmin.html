@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<script src="https://cdn.tailwindcss.com"></script>
+<title>Super Admin</title>
+</head>
+
+<body class="bg-slate-950 text-white min-h-screen">
+
+<script>
+if (localStorage.getItem("superadmin_session") !== "active") {
+  window.location.href = "/superadmin-login.html";
+}
+</script>
+
+<header class="p-6 border-b border-white/10 flex justify-between items-center">
+  <h1 class="text-2xl font-bold">SUPER ADMIN PANEL</h1>
+  <button onclick="logout()" class="px-4 py-2 bg-rose-600 rounded-lg hover:bg-rose-500 transition">
+    Logout
+  </button>
+</header>
+
+<main class="p-6">
+
+<div class="bg-white/5 rounded-2xl overflow-hidden border border-white/10">
+  <table class="w-full text-sm">
+    <thead class="bg-white/10">
+      <tr>
+        <th class="px-4 py-3 text-left">ID</th>
+        <th class="px-4 py-3 text-left">Name</th>
+        <th class="px-4 py-3 text-left">Package</th>
+        <th class="px-4 py-3 text-left">Total</th>
+        <th class="px-4 py-3 text-left">Status</th>
+        <th class="px-4 py-3 text-left">Action</th>
+      </tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+</div>
+
+</main>
+
+<script>
+const rowsEl = document.getElementById("rows");
+
+async function load(){
+  const res = await fetch("/.netlify/functions/list-bookings");
+  const data = await res.json();
+
+  rowsEl.innerHTML = "";
+
+  if (!data.bookings || data.bookings.length === 0) {
+    rowsEl.innerHTML = `
+      <tr>
+        <td colspan="6" class="text-center py-6 text-white/60">
+          No bookings found.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  data.bookings.forEach(b => {
+    const tr = document.createElement("tr");
+    tr.className = "border-t border-white/10 hover:bg-white/5 transition";
+
+    tr.innerHTML = `
+      <td class="px-4 py-3">${b.id}</td>
+      <td class="px-4 py-3">${b.name}</td>
+      <td class="px-4 py-3">${b.package_name}</td>
+      <td class="px-4 py-3 font-semibold">£${b.total_price}</td>
+      <td class="px-4 py-3">${b.status}</td>
+      <td class="px-4 py-3">
+        <button onclick="deleteBooking(${b.id})"
+          class="px-3 py-2 bg-rose-600 rounded-lg hover:bg-rose-500 transition">
+          Delete Permanently
+        </button>
+      </td>
+    `;
+
+    rowsEl.appendChild(tr);
+  });
+}
+
+async function deleteBooking(id){
+  if (!confirm("Are you sure? This action cannot be undone.")) return;
+
+  const res = await fetch("/.netlify/functions/delete-booking", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ id })
+  });
+
+  const data = await res.json();
+
+  if(res.ok){
+    load();
+  } else {
+    alert(data.error);
+  }
+}
+
+function logout(){
+  localStorage.removeItem("superadmin_session");
+  window.location.href = "/superadmin-login.html";
+}
+
+load();
+</script>
+
+</body>
+  </html>
