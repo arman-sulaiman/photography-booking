@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Super Admin Login</title>
+</head>
+<body class="bg-slate-950 flex items-center justify-center min-h-screen text-white">
+
+<div class="bg-white/5 p-8 rounded-2xl border border-white/10 w-96">
+  <h2 class="text-2xl font-bold mb-6 text-center">Super Admin Login</h2>
+
+  <input id="username" placeholder="Username"
+    class="w-full mb-4 px-4 py-3 rounded-lg bg-slate-900 border border-white/10" />
+
+  <input id="password" type="password" placeholder="Password"
+    class="w-full mb-4 px-4 py-3 rounded-lg bg-slate-900 border border-white/10" />
+
+  <button onclick="login()"
+    class="w-full bg-emerald-600 py-3 rounded-lg hover:bg-emerald-500 transition">
+    Login
+  </button>
+
+  <p id="error" class="text-rose-400 mt-4 text-sm text-center"></p>
+</div>
+
+<script>
+async function login() {
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
+  const res = await fetch("/.netlify/functions/superadmin-login", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ username, password })
+  });
+
+  const data = await res.json();
+
+  if (res.ok) {
+    localStorage.setItem("superadmin_session", "active");
+    window.location.href = "/superadmin.html";
+  } else {
+    document.getElementById("error").textContent = data.error;
+  }
+}
+</script>
+
+</body>
+</html>
