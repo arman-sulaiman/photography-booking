@@ -3,8 +3,8 @@ export default async (req) => {
     const { username, password } = await req.json();
 
     // 🔐 Change these credentials
-    const SUPER_USER = "superadmin";
-    const SUPER_PASS = "SuperSecure@2026";
+    const SUPER_USER = "iftybabe";
+    const SUPER_PASS = "iftybabe@@";
 
     if (username === SUPER_USER && password === SUPER_PASS) {
       return new Response(
