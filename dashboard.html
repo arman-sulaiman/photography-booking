@@ -11,8 +11,7 @@
 
 <!-- 🔒 Session Check -->
 <script>
-if (!localStorage.getItem("admin_session") && 
-    !localStorage.getItem("superadmin_session")) {
+if (localStorage.getItem("superadmin_session") !== "active") {
   window.location.href = "/superadmin-login.html";
 }
 </script>
@@ -143,8 +142,6 @@ if (!localStorage.getItem("admin_session") &&
 
 <script>
 function logout(){
-  localStorage.removeItem("admin_session");
-  localStorage.removeItem("superadmin_session");
   window.location.href = "/superadmin-login.html";
 }
 </script>
