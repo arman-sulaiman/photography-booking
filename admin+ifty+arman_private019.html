@@ -6,7 +6,11 @@
 <title>Bookings Admin</title>
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
+<script>
+if (localStorage.getItem("superadmin_session") !== "active") {
+  window.location.href = "/superadmin-login.html";
+}
+</script>
 <body class="bg-slate-950 text-white min-h-screen">
 
 <header class="sticky top-0 z-10 bg-slate-950/80 backdrop-blur border-b border-white/10">
