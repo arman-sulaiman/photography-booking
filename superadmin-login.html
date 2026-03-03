@@ -40,7 +40,7 @@ async function login() {
 
   if (res.ok) {
     localStorage.setItem("superadmin_session", "active");
-    window.location.href = "/superadmin.html";
+    window.history.back();
   } else {
     document.getElementById("error").textContent = data.error;
   }
