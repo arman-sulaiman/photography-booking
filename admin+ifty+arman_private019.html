@@ -24,11 +24,11 @@ if (localStorage.getItem("superadmin_session") !== "active") {
     </div>
 
     <div class="flex gap-3">
-      <a href="index.html" class="px-4 py-2 rounded-xl border border-white/20 hover:bg-white/10 text-sm">
-        New booking
+      <a href="dashboard.html" class="px-4 py-2 rounded-xl border border-white/20 hover:bg-white/10 text-sm">
+        Dashboard
       </a>
-      <button id="refreshBtn" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-sm">
-        Refresh
+      <button onclick="logout()" id="refreshBtn" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-sm">
+        Logout
       </button>
     </div>
   </div>
@@ -256,9 +256,12 @@ async function load(){
   }
 }
 
-refreshBtn.addEventListener("click", load);
+function logout(){
+  localStorage.removeItem("superadmin_session");
+  window.location.href = "/superadmin-login.html";
+}
+
 load();
-setInterval(load, 5000);
 </script>
 
 </body>
