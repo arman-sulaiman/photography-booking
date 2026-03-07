@@ -97,7 +97,6 @@ export default async (req) => {
     await resend.emails.send({
   from: "Masruf Ifty Photography <photography@masruf-ifty.me>",
   to: email,
-  reply_to: "armansulaiman003@gmail.com", 
   subject: "Booking Confirmation – Masruf Ifty Photography",
   html: `
   <div style="background:#0f172a;padding:40px 20px;font-family:Arial,sans-serif;color:#e2e8f0;">
