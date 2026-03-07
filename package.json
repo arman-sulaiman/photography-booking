@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-  "@netlify/neon": "latest"
-}
+    "@netlify/neon": "latest",
+    "resend": "^6.9.3"
+  }
 }
