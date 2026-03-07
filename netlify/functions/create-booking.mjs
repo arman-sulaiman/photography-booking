@@ -95,50 +95,101 @@ export default async (req) => {
 
     // Send confirmation email
     await resend.emails.send({
-      from: "Masruf Ifty Photography <onboarding@resend.dev>",
-      to: email,
-      subject: "Your Photography Booking Confirmation",
-      html: `
-        <h2>Booking Confirmed</h2>
+  from: "Masruf Ifty Photography <noreply@masruf-ifty.me>",
+  to: email,
+  subject: "Booking Confirmation – Masruf Ifty Photography",
+  html: `
+  <div style="background:#0f172a;padding:40px 20px;font-family:Arial,sans-serif;color:#e2e8f0;">
+  
+    <div style="max-width:600px;margin:auto;background:#020617;border-radius:16px;border:1px solid rgba(255,255,255,0.1);overflow:hidden;">
+      
+      <!-- Header -->
+      <div style="padding:24px 28px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;">
+        <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#34d399,#22d3ee);margin-right:12px;"></div>
+        <div>
+          <div style="font-size:12px;color:#94a3b8;">MASRUF IFTY</div>
+          <div style="font-size:16px;font-weight:bold;">Photography</div>
+        </div>
+      </div>
 
-        <p>Hello <b>${name}</b>,</p>
+      <!-- Body -->
+      <div style="padding:28px;">
 
-        <p>Thank you for booking with <b>Masruf Ifty Photography</b>.</p>
+        <h2 style="margin-top:0;color:#ffffff;font-size:22px;">
+          Booking Confirmed
+        </h2>
 
-        <h3>Booking Details</h3>
+        <p style="color:#cbd5f5;">
+          Hi <strong>${name}</strong>,  
+          <br><br>
+          Thank you for booking with <strong>Masruf Ifty Photography</strong>.  
+          Your request has been received and we will contact you shortly.
+        </p>
 
-        <table style="border-collapse:collapse;">
-          <tr>
-            <td><b>Package:</b></td>
-            <td>${package_name}</td>
-          </tr>
+        <!-- Booking card -->
+        <div style="background:#0f172a;border-radius:12px;padding:20px;margin-top:20px;border:1px solid rgba(255,255,255,0.08);">
 
-          <tr>
-            <td><b>Shooting Date:</b></td>
-            <td>${shootDate}</td>
-          </tr>
+          <table style="width:100%;font-size:14px;border-collapse:collapse;color:#e2e8f0;">
+            
+            <tr>
+              <td style="padding:6px 0;color:#94a3b8;">Package</td>
+              <td style="text-align:right;font-weight:600;">${package_name}</td>
+            </tr>
 
-          <tr>
-            <td><b>Add-ons:</b></td>
-            <td>${addonList}</td>
-          </tr>
+            <tr>
+              <td style="padding:6px 0;color:#94a3b8;">Shooting Date</td>
+              <td style="text-align:right;font-weight:600;">${shootDate}</td>
+            </tr>
 
-          <tr>
-            <td><b>Total Price:</b></td>
-            <td>£${total_price}</td>
-          </tr>
-        </table>
+            <tr>
+              <td style="padding:6px 0;color:#94a3b8;">Add-ons</td>
+              <td style="text-align:right;">${addonList}</td>
+            </tr>
 
-        <br>
+            <tr>
+              <td style="padding:10px 0;color:#94a3b8;">Total</td>
+              <td style="text-align:right;font-weight:bold;color:#34d399;font-size:16px;">
+                £${total_price}
+              </td>
+            </tr>
 
-        <p>We will contact you shortly to confirm the details.</p>
+          </table>
 
-        <br>
+        </div>
 
-        <p>Best regards,<br>
-        <b>Masruf Ifty Photography</b></p>
-      `
-    });
+        <!-- Notes -->
+        ${
+          notes
+            ? `
+        <div style="margin-top:20px;color:#cbd5f5;">
+          <strong>Client Notes</strong>
+          <p style="margin-top:6px;">${notes}</p>
+        </div>
+        `
+            : ""
+        }
+
+        <!-- Footer message -->
+        <p style="margin-top:28px;color:#cbd5f5;">
+          If you need to update anything regarding your booking, feel free to reply to this email.
+        </p>
+
+        <p style="margin-top:20px;">
+          Best regards,<br>
+          <strong>Masruf Ifty Photography</strong>
+        </p>
+
+      </div>
+
+      <!-- Footer -->
+      <div style="padding:20px;text-align:center;font-size:12px;color:#94a3b8;border-top:1px solid rgba(255,255,255,0.08);">
+        © ${new Date().getFullYear()} Masruf Ifty Photography
+      </div>
+
+    </div>
+  </div>
+  `
+});
 
     return new Response(JSON.stringify({ success: true }), {
       headers: { "Content-Type": "application/json" }
